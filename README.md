@@ -1,2 +1,2 @@
 # higherorlower-spotify
-A higher or lower game with your favourite Spotify artists! 
+Higher or Lower but with Spotify songs!
