@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Higher or Lower</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="output.css">
+</head>
+<body class="bg-spotify-black text-white font-montserrat font-semibold selection:bg-spotify-green selection:text-spotify-black">
+    <main>
+        <div class="
+            flex items-center justify-center h-screen
+        ">
+            <div>
+                <img class="
+                    hidden
+                " src="" id="#first-artist-img"> 
+                <h1 id="first-artist" class="
+                    text-3xl font-medium py-2
+                ">First Artist:</h1>
+                <div class="
+                    flex items-center justify-center gap-2
+                ">
+                    <input class="
+                        bg-zinc-800 text-white placeholder-zinc-400
+                        px-4 py-1 text-xl 
+                        border-2 border-zinc-700 rounded-full outline-none
+                        disabled:bg-zinc-800
+                    " placeholder="Taylor Swift" id="artist-textbox-1" required autocomplete="off">
+                    <button class="
+                        bg-zinc-800 text-white 
+                        px-4 py-1 text-xl 
+                        border-2 border-zinc-700 rounded-full
+                        hover:bg-zinc-700 hover:border-zinc-600 
+                    "    id="submit-artist-1"
+                    ><i class="fa-solid fa-check 
+                        text-2xl text-zinc-400
+                    "></i></button>
+                </div>
+            </div>
+            <div class="
+                px-32
+            ">
+                <div class="
+                    flex items-center justify-center
+                ">
+                    <img src="assets/spotify-logo.png" alt="">
+                </div>
+                <div class="
+                    text-6xl text-center text-spotify-green
+                    py-4
+                ">
+                    Higher or Lower
+                </div>
+                <div class="
+                    text-xl text-center text-spotify-green
+                    w-96 mx-auto
+                ">
+                    Select the artist w/ more streams on a song.
+                </div>
+                <div class="
+                    flex items-center justify-center
+                    py-4 text-2xl text-spotify-purple-one
+                ">
+                    <ul>
+                        <li class="hover:text-spotify-purple-two transition-colors"><a href="#">How to play?</a></li>
+                        <li class="hover:text-spotify-purple-two transition-colors"><a href="#">Game Modes</a></li>
+                    </ul>
+                </div>
+                <div class="
+                    flex items-center justify-center
+                    text-2xl text-spotify-purple-one   
+                ">
+                    <div class="px-1 hover:cursor-pointer hover:text-spotify-purple-two transition-colors"><a href="https://github.com/immaharry" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+                    <div class="px-1 hover:cursor-pointer hover:text-spotify-purple-two transition-colors"><a href="https://twitter.com/harrydadev" target="_blank"><i class="fa-brands fa-twitter"></i></a></div>
+                    <div class="px-1 hover:cursor-pointer hover:text-spotify-purple-two transition-colors"><a href="https://open.spotify.com/user/31rnoktz2qe57ofarxjbndeb5pz4?si=7c999ac0f1cf4c6a" target="_blank"><i class="fa-brands fa-spotify"></i></a></div>
+                </div>
+            </div>
+            <div>
+                <h1 class="
+                    text-3xl font-medium py-2
+                ">Second Artist:</h1>
+                <div class="
+                    flex items-center justify-center gap-2
+                ">
+                    <input class="
+                        bg-zinc-800 text-white placeholder-zinc-400
+                        px-4 py-1 text-xl 
+                        border-2 border-zinc-700 rounded-full outline-none hover:cursor-not-allowed
+                    " placeholder="One Direction" id="artist-textbox-2" required autocomplete="off" disabled>
+                    <button class="
+                        bg-zinc-800 text-white 
+                        px-4 py-1 text-xl 
+                        border-2 border-zinc-700 rounded-full
+                        hover:bg-zinc-700 hover:border-zinc-600
+                    "    id="submit-artist-2"
+                    ><i class="fa-solid fa-check 
+                        text-2xl text-zinc-400
+                    "></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="./assets/index.js"></script>
+
+</body>
+
+</html>
