@@ -4,7 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Higher or Lower</title>
+    <meta property="og:title" content="Higher or Lower | Spotify Albums!">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:url" content="https://github.com/ImmaHarry/higherorlower-spotify">
+    <meta property="og:description" content="A higher or lower game clone but with your favorite Spotify albums from the top artists!">
+    <meta property="og:site_name" content="Spotify Higher or Lower">
+    <meta property="og:image" content="https://media.discordapp.net/attachments/897666935708352587/1045343393900941362/site-img.png?width=1337&height=676">
+    <meta name="theme-color" content="#1ED760">
+    <meta name="twitter:title" content="Higher or Lower | Spotify Albums">
+    <meta name="twitter:description" content="A higher or lower game clone but with your favorite Spotify albums from the top artists!">
+    <meta name="twitter:image" content="https://media.discordapp.net/attachments/897666935708352587/1045343393900941362/site-img.png?width=1337&height=676">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Higher or Lower | Spotify</title>
+    <!--Adding an icon for website tab-->
+    <link rel="icon" href="../flaticon.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +25,7 @@
     <link rel="stylesheet" href="output.css">
     <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
-<body class="bg-spotify-black text-white font-montserrat font-semibold selection:bg-spotify-green selection:text-spotify-black">
+<body class="bg-gradient-to-b from-spotify-black to-neutral-900 text-white font-montserrat font-semibold selection:bg-spotify-green selection:text-spotify-black">
     <main>
         <div class="
             flex items-center justify-center h-screen
@@ -28,11 +41,31 @@
                 ">0</span></h1>
             </div>
         </div>
+
+        <div class="hidden
+         z-50 absolute bg-modal-background w-1/2 h-1/2 rounded-md border-white border-2
+        " id="modal">
+            <h1 id="modal-title" class="text-spotify-green text-4xl text-center py-2 underline">Modal Title</h1>
+            <div class="
+                flex items-center justify-center flex-col h-full
+            ">
+                <p id="modal-body" class="px-4 py-2 text-xl text-center"></p>
+                <div class="hidden" id="share-score">
+                    <h1 class="text-spotify-green text-2xl text-center py-2 underline">Share your score!</h1>
+                    <div class="flex justify-center">
+                        <a href="https://twitter.com/intent/tweet?text=I Just Played Higher or Lower Spotify Albums and got a score of" id="twitter-share" target="_blank" class="text-white text-xl px-2 py-1 bg-transparent border-2 border-white rounded-md hover:bg-spotify-green-hover transition duration-300 ease-in-out"><i class="fab fa-twitter"></i> Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end px-2 py-2 absolute bottom-0 right-0">
+                <button class="border-spotify-green border-2 px-4 py-1 rounded-md shadow-sm hover:bg-black transition-colors" id="close-modal"><i class="fa-solid fa-x"></i> Close</button>
+            </div>
+        </div>
             <div>
                 <h1 class="
-                    text-4xl text-center pb-2
+                    text-4xl text-center pb-2 overflow-ellipsis
                 ">Artist: <br><span class="
-                    text-spotify-green truncate
+                    text-spotify-green break-all
                     " id="artist-name-1">Loading...</span></h1>
                 <h2 class="
                     text-2xl text-center pb-2
@@ -88,6 +121,7 @@
                         shadow-lg
                         hover:bg-spotify-black hover:text-spotify-green
                         transition-all hover:cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-spotify-green disabled:hover:text-spotify-black
+                        hover:border-spotify-green hover:border-2
                     " id="start-game-btn"><i class="fa-solid fa-rocket"></i> Start Game</button></div>
                 </div>
                 <div id="guess-controls" class="
@@ -101,8 +135,9 @@
                             rounded-3xl
                             shadow-lg
                             hover:bg-spotify-black hover:text-spotify-green
-                            transition-all
-                        " id="higher-btn">Higher</button>
+                            transition-all hover:cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-spotify-green disabled:hover:text-spotify-black
+                            hover:border-spotify-green hover:border-2
+                        " id="higher-btn"><i class="fa-solid fa-up"></i>Higher</button>
                     </div>
                     <div class="px-1">
                         <button class="
@@ -111,8 +146,9 @@
                             rounded-3xl
                             shadow-lg
                             hover:bg-spotify-black hover:text-spotify-green
-                            transition-all
-                        "id="lower-btn">Lower</button>
+                            transition-all hover:cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-spotify-green disabled:hover:text-spotify-black
+                            hover:border-spotify-green hover:border-2
+                        "id="lower-btn"><i class="fa-solid fa-down"></i>Lower</button>
                     </div>
                 </div>
                 <div class="
@@ -120,7 +156,7 @@
                     py-4 text-2xl text-spotify-purple-one
                 ">
                     <ul>
-                        <li class="hover:text-spotify-purple-two transition-colors"><a href="#">How to play?</a></li>
+                        <li id="how-to-play" class="hover:text-spotify-purple-two transition-colors"><a href="#">How to play?</a></li>
                         <li class="hover:text-spotify-purple-two transition-colors"><a href="#">Game Modes</a></li>
                     </ul>
                 </div>
@@ -166,8 +202,20 @@
                     ">Loading...</span></h2>
             </div>
         </div>
+        <footer class="
+            bg-spotify-black text-spotify-green
+            py-4 absolute bottom-0 w-full text-right px-4
+        ">
+            <p>Created by <a class="underline" href="https://github.com/immaharry">HarryDaDev</a>.</p>
+            <p>This project is no way is linked with <a class="underline" href="https://spotify.com">Spotify</a>.</p>
+            <div>
+                <span class="px-4"><a class="hover:underline hover:underline-offset-2" href="https://github.com/ImmaHarry/higherorlower-spotify"><i class="fa-solid fa-handshake"></i> Contribute</a></span>
+                <span class="px-4"><a class="hover:underline hover:underline-offset-2" href="https://github.com/ImmaHarry/higherorlower-spotify/issues"><i class="fa-solid fa-bug"></i> Known Bugs</a></span>
+                <span class="pl-4"><a class="hover:underline hover:underline-offset-2" href="https://github.com/ImmaHarry/higherorlower-spotify/blob/main/README.md"><i class="fa-solid fa-pen-nib"></i> Future Updates</a></span>
+            </div>
+        </footer>
     </main>
-    <script src="./assets/index.js"></script>
+    <script src="assets/index.js"></script>
 </body>
 
 </html>

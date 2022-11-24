@@ -12,6 +12,7 @@ module.exports = {
         'spotify-purple-one': '#6D51D0',
         'spotify-purple-two': '#A74EBD',
         'spotify-purple-three': '#D54AB6',
+        'modal-background': '#1C1C1C',
       }
   },
   plugins: [],
