@@ -119,6 +119,9 @@ start_game_btn.addEventListener("click", async () => {
     album_second_streams.innerHTML = "???"
     song_preview_btn_two.classList.remove("hidden")
 
+    document.querySelector("#left-side-content").classList.remove("hidden")
+    document.querySelector("#right-side-content").classList.remove("hidden")
+
     popularity_label.innerHTML = "Does the second album have a higher or lower popularity than the first album?"
     start_container.classList.add("hidden")
     guess_controls.classList.add("flex")
