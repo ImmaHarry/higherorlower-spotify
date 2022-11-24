@@ -10,38 +10,52 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="output.css">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 </head>
 <body class="bg-spotify-black text-white font-montserrat font-semibold selection:bg-spotify-green selection:text-spotify-black">
     <main>
         <div class="
             flex items-center justify-center h-screen
         ">
+        <div id="Counter" class="
+            absolute top-0 right-0
+        ">
             <div>
-                <img class="
-                    hidden
-                " src="" id="#first-artist-img"> 
-                <h1 id="first-artist" class="
-                    text-3xl font-medium py-2
-                ">First Artist:</h1>
-                <div class="
-                    flex items-center justify-center gap-2
-                ">
-                    <input class="
-                        bg-zinc-800 text-white placeholder-zinc-400
-                        px-4 py-1 text-xl 
-                        border-2 border-zinc-700 rounded-full outline-none
-                        disabled:bg-zinc-800
-                    " placeholder="Taylor Swift" id="artist-textbox-1" required autocomplete="off">
-                    <button class="
-                        bg-zinc-800 text-white 
-                        px-4 py-1 text-xl 
-                        border-2 border-zinc-700 rounded-full
-                        hover:bg-zinc-700 hover:border-zinc-600 
-                    "    id="submit-artist-1"
-                    ><i class="fa-solid fa-check 
-                        text-2xl text-zinc-400
-                    "></i></button>
-                </div>
+                <h1 class="text-4xl 
+                    px-4 py-2
+                "><span id="score-text"><i class="fa-solid fa-trophy"></i> Score: </span><span id="score-counter" class="
+                    text-spotify-green
+                ">0</span></h1>
+            </div>
+        </div>
+            <div>
+                <h1 class="
+                    text-4xl text-center pb-2
+                ">Artist: <br><span class="
+                    text-spotify-green truncate
+                    " id="artist-name-1">Loading...</span></h1>
+                <h2 class="
+                    text-2xl text-center pb-2
+                ">Album: <br><span id="album-name-1" class="
+                    text-spotify-green truncate
+                    ">Loading...</span></h2>
+                <img src="assets/loading.png" class="
+                    w-96 h-96
+                    object-cover
+                    rounded-3xl
+                    shadow-lg
+                " id="artist-thumbnail-1">
+                <h2 class="
+                    text-2xl text-center pt-2
+                ">Album Release Year: <span class="
+                    text-spotify-green
+                    " id="release-year-1">Loading...</span></h2>
+
+                <h2 class="
+                    text-3xl text-center pt-2
+                ">Popularity Index: <span id="artist-streams-start" class="
+                    text-spotify-green
+                    ">Loading...</span></h2>
             </div>
             <div class="
                 px-32
@@ -61,7 +75,45 @@
                     text-xl text-center text-spotify-green
                     w-96 mx-auto
                 ">
-                    Select the artist w/ more streams on a song.
+                    Select the artist w/ a greater popularity index.
+                </div>
+                <div id="start-container">
+                    <div class="
+                        flex items-center justify-center
+                        py-2 pt-4
+                    "><button class="
+                        bg-spotify-green text-spotify-black
+                        px-4 py-2
+                        rounded-3xl
+                        shadow-lg
+                        hover:bg-spotify-black hover:text-spotify-green
+                        transition-all hover:cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-spotify-green disabled:hover:text-spotify-black
+                    " id="start-game-btn"><i class="fa-solid fa-rocket"></i> Start Game</button></div>
+                </div>
+                <div id="guess-controls" class="
+                    hidden items-center justify-center
+                    py-2 
+                ">
+                    <div class="px-1">
+                        <button class="
+                            bg-spotify-green text-spotify-black
+                            px-4 py-2
+                            rounded-3xl
+                            shadow-lg
+                            hover:bg-spotify-black hover:text-spotify-green
+                            transition-all
+                        " id="higher-btn">Higher</button>
+                    </div>
+                    <div class="px-1">
+                        <button class="
+                            bg-spotify-green text-spotify-black
+                            px-4 py-2
+                            rounded-3xl
+                            shadow-lg
+                            hover:bg-spotify-black hover:text-spotify-green
+                            transition-all
+                        "id="lower-btn">Lower</button>
+                    </div>
                 </div>
                 <div class="
                     flex items-center justify-center
@@ -81,33 +133,41 @@
                     <div class="px-1 hover:cursor-pointer hover:text-spotify-purple-two transition-colors"><a href="https://open.spotify.com/user/31rnoktz2qe57ofarxjbndeb5pz4?si=7c999ac0f1cf4c6a" target="_blank"><i class="fa-brands fa-spotify"></i></a></div>
                 </div>
             </div>
+            <div class="
+            flex items-center justify-center h-screen
+        ">
             <div>
                 <h1 class="
-                    text-3xl font-medium py-2
-                ">Second Artist:</h1>
-                <div class="
-                    flex items-center justify-center gap-2
-                ">
-                    <input class="
-                        bg-zinc-800 text-white placeholder-zinc-400
-                        px-4 py-1 text-xl 
-                        border-2 border-zinc-700 rounded-full outline-none hover:cursor-not-allowed
-                    " placeholder="One Direction" id="artist-textbox-2" required autocomplete="off" disabled>
-                    <button class="
-                        bg-zinc-800 text-white 
-                        px-4 py-1 text-xl 
-                        border-2 border-zinc-700 rounded-full
-                        hover:bg-zinc-700 hover:border-zinc-600
-                    "    id="submit-artist-2"
-                    ><i class="fa-solid fa-check 
-                        text-2xl text-zinc-400
-                    "></i></button>
-                </div>
+                    text-4xl text-center pb-2
+                ">Artist: <br><span class="
+                    text-spotify-green truncate
+                    " id="artist-name-2">Loading...</span></h1>
+                <h2 class="
+                    text-2xl text-center pb-2
+                ">Album: <br><span id="album-name-2" class="
+                    text-spotify-green truncate
+                    ">Loading...</span></h2>
+                <img src="assets/loading.png" class="
+                    w-96 h-96
+                    object-cover
+                    rounded-3xl
+                    shadow-lg
+                " id="artist-thumbnail-2">
+                <h2 class="
+                    text-2xl text-center pt-2
+                ">Album Release Year: <span class="
+                    text-spotify-green
+                    " id="release-year-2">Loading...</span></h2>
+
+                <h2 class="
+                    text-3xl text-center pt-2
+                ">Popularity Index: <span id="artist-streams-next" class="
+                    text-spotify-green
+                    ">Loading...</span></h2>
             </div>
         </div>
     </main>
     <script src="./assets/index.js"></script>
-
 </body>
 
 </html>

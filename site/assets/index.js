@@ -1,113 +1,140 @@
-let artist_btn_1 = document.getElementById("submit-artist-1");
-let artist_btn_2 = document.getElementById("submit-artist-2");
-let artist_text_box_1 = document.getElementById("artist-textbox-1");
-let artist_text_box_2 = document.getElementById("artist-textbox-2");
-token = "";
+let artist_name_one = document.querySelector("#artist-name-1")
+let artist_name_two = document.querySelector("#artist-name-2")
 
+let album_name_one = document.querySelector("#album-name-1")
+let album_name_two = document.querySelector("#album-name-2")
+let album_release_one = document.querySelector("#release-year-1")
+let album_release_two = document.querySelector("#release-year-2")
+let album_thumbnail_one = document.querySelector("#artist-thumbnail-1")
+let album_thumbnail_two = document.querySelector("#artist-thumbnail-2")
+let album_first_streams = document.querySelector("#artist-streams-start")
+let album_second_streams = document.querySelector("#artist-streams-next")
 
-function getArtistData(artist_name) {
-    let artist_id;
-    let url = "https://api.spotify.com/v1/search?q=" + artist_name + "&type=artist";
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", url, false);
-    xhr.setRequestHeader("Authorization", "Bearer " + token);
-    xhr.send();
-    let response = JSON.parse(xhr.responseText);
+//This is going to expire so I don't care.
+let spotify_token = "BQD45q0U-UbNr1XslitFjrmce36Q5moNCiXHRD-WuSFv09-fNj76J_IEvdPXLi9Rlzod1CudbM0WYyfdN_gfK9FDjIn3a5vUrewDJORWq0xb36m9o1mZ3VI5tmy-M-aWFp_IzZuG4rk0fzzV_m1l6mP1pUS-9m4bx_-bqdougE184XYsvnavXVaK51PQNPXdCilHLNs"
 
-    artist_name = response.artists.items[0].name;
-    artist_id = response.artists.items[0].id;
-    artist_img = response.artists.items[0].images[0].url;
+playlists = ["https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF?si=faaa2d272ee3496e","https://open.spotify.com/playlist/37i9dQZF1DX7iB3RCnBnN4?si=a19e44f9f7c34acb"]
+score = 0
 
-    return {
-        "artist_name": artist_name,
-        "artist_id": artist_id,
-        "artist_img": artist_img
-    }
-}
-
-function getAlbums() {
-    //artist_id = getArtistData("The Weeknd").artist_id;
-    let url = "https://api.spotify.com/v1/artists/" + artist_id + "/albums?include_groups=album&market=US&limit=50";
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", url, false);
-    xhr.setRequestHeader("Authorization", "Bearer " + token);
-    xhr.send();
-    let response = JSON.parse(xhr.responseText);
-    let albums = response.items;
-    let album_list = [];
-    for (let i = 0; i < albums.length; i++) {
-        let album = {
-            "album_id": albums[i].id,
-            "album_name": albums[i].name,
-            "album_img": albums[i].images[0].url
-        }
-        album_list.push(album);
-    }
-    return album_list;
-}
-
-function getAlbumIDs() {
-    let album_ids = [];
-    let albums = getAlbums();
-    for (let i = 0; i < albums.length; i++) {
-        album_ids.push(albums[i].album_id);
-    }
-    return album_ids;
-}
-
-function getSongs() {
-    let album_ids = getAlbumIDs();
-    let song_list = [];
-    for (let i = 0; i < album_ids.length; i++) {
-        let url = "https://api.spotify.com/v1/albums/" + album_ids[i] + "/tracks";
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", url, false);
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-        xhr.send();
-        let response = JSON.parse(xhr.responseText);
-        let songs = response.items;
-        for (let j = 0; j < songs.length; j++) {
-            let song = {
-                "song_id": songs[j].id,
+async function getArtists() {
+    let artists = []
+    for (let i = 0; i < playlists.length; i++) {
+        let playlist_id = playlists[i].split("playlist/")[1].split("?")[0]
+        let response = await fetch(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+            method: "GET",
+            headers: {
+                "Authorization" : `Bearer ${spotify_token}`
             }
-            song_list.push(song);
+        })
+        let data = await response.json()
+        for (let j = 0; j < data.items.length; j++) {
+            artists.push(data.items[j].track.artists[0].name)
         }
     }
-    return song_list;
+    return [...new Set(artists)]
 }
 
-function getStreams() {
-    let songs = getSongs();
-    let stream_list = [];
-    for (let i = 0; i < songs.length; i++) {
-        let url = "https://api.spotify.com/v1/audio-features/" + songs[i].song_id;
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", url, false);
-        xhr.setRequestHeader
-        xhr.setRequestHeader("Authorization", "Bearer " + token);
-        xhr.send();
-        let response = JSON.parse(xhr.responseText);
-        let stream = {
-            "song_name": response.name,
-            "streams": response.popularity
+async function getRandomAlbum() {
+    random_artist = await getArtists()
+    random_artist = random_artist[Math.floor(Math.random() * random_artist.length)]
+    let response = await fetch(`https://api.spotify.com/v1/search?q=${random_artist}&type=album`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${spotify_token}`
         }
-        stream_list.push(stream);
+    })
+    let data = await response.json()
+    let random_album = data.albums.items[Math.floor(Math.random() * data.albums.items.length)]
+    let response2 = await fetch(`https://api.spotify.com/v1/albums/${random_album.id}`, {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${spotify_token}`,
+            "Content-Type": "application/json"
+        }
+    })
+    let data2 = await response2.json()
+    return {
+        "name": data2.name,
+        "release_year": data2.release_date.split("-")[0],
+        "popularity": data2.popularity,
+        "thumbnail": data2.images[0].url,
+        "artist_name": data2.artists[0].name
     }
-    return stream_list;
 }
 
-function getRandomSong() {
-    let album_ids = getAlbumIDs();
-    let random_album_id = album_ids[Math.floor(Math.random() * album_ids.length)];
-    let url = "https://api.spotify.com/v1/albums/" + random_album_id + "/tracks";
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", url, false);
-    xhr.setRequestHeader("Authorization", "Bearer " + token);
-    xhr.send();
-    let response = JSON.parse(xhr.responseText);
-    let songs = response.items;
-    let random_song = songs[Math.floor(Math.random() * songs.length)];
-    return random_song;
+let start_container = document.querySelector("#start-container")
+let start_game_btn = document.querySelector("#start-game-btn")
+let guess_controls = document.querySelector("#guess-controls")
+let higher_btn = document.querySelector("#higher-btn")
+let lower_btn = document.querySelector("#lower-btn")
+let score_counter = document.querySelector("#score-counter")
+
+function endGame(score, pop1, pop2) {
+    alert(`Game over! Your score is ${score}! The first album had a popularity of ${pop1} and the second album had a popularity of ${pop2}`)
+    location.reload()
 }
 
-console.log(getRandomSong());
+start_game_btn.addEventListener("click", async () => {
+
+    start_game_btn.disabled = true
+
+    let random_album = await getRandomAlbum()
+    album_name_one.innerHTML = random_album.name
+    album_release_one.innerHTML = random_album.release_year
+    album_thumbnail_one.src = random_album.thumbnail
+    artist_name_one.innerHTML = random_album.artist_name
+    album_first_streams.innerHTML = random_album.popularity
+
+    let random_album2 = await getRandomAlbum()
+    album_name_two.innerHTML = random_album2.name
+    album_release_two.innerHTML = random_album2.release_year
+    album_thumbnail_two.src = random_album2.thumbnail
+    artist_name_two.innerHTML = random_album2.artist_name
+    album_second_streams.innerHTML = "???"
+
+    start_container.classList.add("hidden")
+    guess_controls.classList.add("flex")
+    guess_controls.classList.remove("hidden")
+
+    higher_btn.addEventListener("click", async () => {
+        if (random_album.popularity < random_album2.popularity) {
+            score++
+            score_counter.innerHTML = score
+            random_album = random_album2
+            album_name_one.innerHTML = random_album.name
+            album_release_one.innerHTML = random_album.release_year
+            album_thumbnail_one.src = random_album.thumbnail
+            artist_name_one.innerHTML = random_album.artist_name
+            album_first_streams.innerHTML = random_album.popularity
+            random_album2 = await getRandomAlbum()
+            album_name_two.innerHTML = random_album2.name
+            album_release_two.innerHTML = random_album2.release_year
+            album_thumbnail_two.src = random_album2.thumbnail
+            artist_name_two.innerHTML = random_album2.artist_name
+            album_second_streams.innerHTML = "???"
+        } else {
+            endGame(score, random_album.popularity, random_album2.popularity)
+        }
+    })
+    lower_btn.addEventListener("click", async () => {
+        if (random_album.popularity > random_album2.popularity) {
+            score++
+            score_counter.innerHTML = score
+            random_album = random_album2
+            album_name_one.innerHTML = random_album.name
+            album_release_one.innerHTML = random_album.release_year
+            album_thumbnail_one.src = random_album.thumbnail
+            artist_name_one.innerHTML = random_album.artist_name
+            album_first_streams.innerHTML = random_album.popularity
+            random_album2 = await getRandomAlbum()
+            album_name_two.innerHTML = random_album2.name
+            album_release_two.innerHTML = random_album2.release_year
+            album_thumbnail_two.src = random_album2.thumbnail
+            artist_name_two.innerHTML = random_album2.artist_name
+            album_second_streams.innerHTML = "???"
+        } else {
+            endGame(score, random_album.popularity, random_album2.popularity)
+        }
+    })
+})
+
