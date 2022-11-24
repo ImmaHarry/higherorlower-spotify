@@ -1,4 +1,9 @@
-# higherorlower-spotify
-Higher or Lower but with Spotify songs!
+# Higher or Lower w/ your favorite Spotify Albums!
+Higher or Lower but with the albums from the trending artists!!
+<br>
 
-UPDATE: Won't be working on this anymore since spotify api does not support stream count. Once it does, I might take this up.
+
+<img src="https://cdn.discordapp.com/attachments/897666935708352587/1045338334643372042/image.png">
+
+Yes, I am aware about the bugs. Just wait for the next version.
+Note: Once you clone, headover to the `index.js` file present in the assets folder. Then, go to the spotify console and grab yourself a temp. authentication key and replace it with the one present there (Line 13).
