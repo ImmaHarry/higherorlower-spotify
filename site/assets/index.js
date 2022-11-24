@@ -10,7 +10,7 @@ let album_thumbnail_two = document.querySelector("#artist-thumbnail-2")
 let album_first_streams = document.querySelector("#artist-streams-start")
 let album_second_streams = document.querySelector("#artist-streams-next")
 
-let spotify_token = "BQBklkJ2GrJ8Ecrfd3oHDTKZZ0X1UVsJ9yohnL-zSKcm-ea7fNdYvh3cM6OLtStIOOorhbBA2gvT7Rl2TWxx2VlinxC0JXmCjMfbPogkombYth8FmmqNVJK0m6ktdu5GZEwq8HudYf0mEHrY5fGnFZGYrfBXxCkCZzmsUFqro0UzEVdOwid4NbA4XATmnhSoaN4Ae_g"
+let spotify_token = "BQC8IQ4Ka5LqAHeotwJFb9kNRp3NZ9TY-yduoO_blw-Q9jWb9FIzAggZUboD5RCqRH2wgjAecvO543k2ZvAK36nyJmzl5Kn0TNOWSoC6jo3vUzAqIzq6Ao49J8rk2R-82lRltAmOanLsdpJmBhIcoTICgGTUlJyH03Kk5RSmH__HzgVP2ZYYlW-YzL_jSYUo_LQQxYY"
 //Headover to Spotify Console and get yourself an access token
 
 playlists = ["https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF?si=faaa2d272ee3496e","https://open.spotify.com/playlist/37i9dQZF1DX7iB3RCnBnN4?si=a19e44f9f7c34acb"]
