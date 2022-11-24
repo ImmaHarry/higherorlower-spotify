@@ -9,8 +9,10 @@ let album_thumbnail_one = document.querySelector("#artist-thumbnail-1")
 let album_thumbnail_two = document.querySelector("#artist-thumbnail-2")
 let album_first_streams = document.querySelector("#artist-streams-start")
 let album_second_streams = document.querySelector("#artist-streams-next")
+let song_1 = document.querySelector("#song-1")
+let song_2 = document.querySelector("#song-2")
 
-let spotify_token = "BQC8IQ4Ka5LqAHeotwJFb9kNRp3NZ9TY-yduoO_blw-Q9jWb9FIzAggZUboD5RCqRH2wgjAecvO543k2ZvAK36nyJmzl5Kn0TNOWSoC6jo3vUzAqIzq6Ao49J8rk2R-82lRltAmOanLsdpJmBhIcoTICgGTUlJyH03Kk5RSmH__HzgVP2ZYYlW-YzL_jSYUo_LQQxYY"
+let spotify_token = "BQCKSgdE7NZvAks4Fzb-Duwt9DtROF27IAeNtb5sXhmVtgxT7a_yMflJ-R0VG3U_EJAPrT4XT3c2g3Xx9SPwvngdePoQUz8b3sZtWsNMEbt-y-Epswb11b6SmDB3ODGYQuCdrAZSKz0TlTPR6ORR3CAsmESWJJiq65AEHg11USpvdfzMoTI9apqNd6Qkxr8SP89LPpA"
 //Headover to Spotify Console and get yourself an access token
 
 playlists = ["https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF?si=faaa2d272ee3496e","https://open.spotify.com/playlist/37i9dQZF1DX7iB3RCnBnN4?si=a19e44f9f7c34acb"]
@@ -52,13 +54,16 @@ async function getRandomAlbum() {
             "Content-Type": "application/json"
         }
     })
+
+
     let data2 = await response2.json()
     return {
         "name": data2.name,
         "release_year": data2.release_date.split("-")[0],
         "popularity": data2.popularity,
         "thumbnail": data2.images[0].url,
-        "artist_name": data2.artists[0].name
+        "artist_name": data2.artists[0].name,
+        "preview_url": data2.tracks.items[0].preview_url
     }
 }
 
@@ -73,13 +78,17 @@ let modal_title = document.querySelector("#modal-title")
 let modal_body = document.querySelector("#modal-body")
 let close_modal = document.querySelector("#close-modal")
 let share_score = document.querySelector("#share-score")
+let twitter_share = document.querySelector("#twitter-share")
+let song_preview_btn_one = document.querySelector("#song-preview-1")
+let song_preview_btn_two = document.querySelector("#song-preview-2")
+let popularity_label = document.querySelector("#popularity-text")
 
 function endGame(score, pop1, pop2) {
     modal.classList.remove("hidden")
     modal_title.innerHTML = "Game Over! Well tried..."
-    modal_body.innerHTML = `You scored ${score} points! <br> The first album had a popularity of ${pop1} and the second album had a popularity of ${pop2}.`
+    modal_body.innerHTML = `You scored ${score} points! <br> The first album had a popularity of ${pop1} and the second album had a popularity of ${pop2}. You can try again by clicking the button below.`
     share_score.classList.remove('hidden')
-    share_score.href = `https://twitter.com/intent/tweet?text=I%20scored%20${score}%20points%20on%20the%20Spotify%20Higher%20Or%20Lower!%20Can%20you%20beat%20me?%20Checkout%20https://harrydadev.me/spotify-higher-or-lower/%20to%20try%20for%20yourself!`
+    twitter_share.href = `https://twitter.com/intent/tweet?text=I%20just%20played%20the%20Higher%20or%20Lower%20Game%20(Spotify%20Edition)%20%26%20scored%20${score}%21%20Try%20it%20out%20yourself%20at%20https://spotify/harrydadev.me.`
 }
 
 close_modal.addEventListener("click", () => {
@@ -89,6 +98,7 @@ close_modal.addEventListener("click", () => {
 
 start_game_btn.addEventListener("click", async () => {
 
+
     start_game_btn.disabled = true
 
     let random_album = await getRandomAlbum()
@@ -97,54 +107,71 @@ start_game_btn.addEventListener("click", async () => {
     album_thumbnail_one.src = random_album.thumbnail
     artist_name_one.innerHTML = random_album.artist_name
     album_first_streams.innerHTML = random_album.popularity
+    song_1.src = random_album.preview_url
+    song_preview_btn_one.classList.remove("hidden")
 
     let random_album2 = await getRandomAlbum()
     album_name_two.innerHTML = random_album2.name
     album_release_two.innerHTML = random_album2.release_year
     album_thumbnail_two.src = random_album2.thumbnail
     artist_name_two.innerHTML = random_album2.artist_name
+    song_2.src = random_album2.preview_url
     album_second_streams.innerHTML = "???"
+    song_preview_btn_two.classList.remove("hidden")
 
+    popularity_label.innerHTML = "Does the second album have a higher or lower popularity than the first album?"
     start_container.classList.add("hidden")
     guess_controls.classList.add("flex")
     guess_controls.classList.remove("hidden")
 
     higher_btn.addEventListener("click", async () => {
         if (random_album.popularity < random_album2.popularity) {
+            higher_btn.disabled = true
             score++
             score_counter.innerHTML = score
             random_album = random_album2
             album_name_one.innerHTML = random_album.name
             album_release_one.innerHTML = random_album.release_year
-            album_thumbnail_one.src = random_album.thumbnail
             artist_name_one.innerHTML = random_album.artist_name
             album_first_streams.innerHTML = random_album.popularity
+            song_1.src = random_album.preview_url
+            album_thumbnail_one.src = "https://i.imgur.com/jsRzKRk.png"
+            album_thumbnail_one.src = random_album.thumbnail
             random_album2 = await getRandomAlbum()
+            album_thumbnail_two.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_two.innerHTML = random_album2.name
             album_release_two.innerHTML = random_album2.release_year
             album_thumbnail_two.src = random_album2.thumbnail
             artist_name_two.innerHTML = random_album2.artist_name
             album_second_streams.innerHTML = "???"
+            song_2.src = random_album2.preview_url
+            higher_btn.disabled = false
         } else {
             endGame(score, random_album.popularity, random_album2.popularity)
         }
     })
     lower_btn.addEventListener("click", async () => {
         if (random_album.popularity > random_album2.popularity) {
+            lower_btn.disabled = true
             score++
             score_counter.innerHTML = score
             random_album = random_album2
+            album_thumbnail_one.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_one.innerHTML = random_album.name
             album_release_one.innerHTML = random_album.release_year
             album_thumbnail_one.src = random_album.thumbnail
             artist_name_one.innerHTML = random_album.artist_name
             album_first_streams.innerHTML = random_album.popularity
+            song_1.src = random_album.preview_url
             random_album2 = await getRandomAlbum()
+            album_thumbnail_two.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_two.innerHTML = random_album2.name
             album_release_two.innerHTML = random_album2.release_year
             album_thumbnail_two.src = random_album2.thumbnail
             artist_name_two.innerHTML = random_album2.artist_name
             album_second_streams.innerHTML = "???"
+            song_2.src = random_album2.preview_url
+            lower_btn.disabled = false
         } else {
             endGame(score, random_album.popularity, random_album2.popularity)
         }
@@ -152,39 +179,53 @@ start_game_btn.addEventListener("click", async () => {
 
     lower_btn.addEventListener("click", async () => {
         if (random_album.popularity == random_album2.popularity) {
+            lower_btn.disabled = true
             score++
             score_counter.innerHTML = score
             random_album = random_album2
+            album_thumbnail_one.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_one.innerHTML = random_album.name
             album_release_one.innerHTML = random_album.release_year
             album_thumbnail_one.src = random_album.thumbnail
             artist_name_one.innerHTML = random_album.artist_name
             album_first_streams.innerHTML = random_album.popularity
+            song_1.src = random_album.preview_url
             random_album2 = await getRandomAlbum()
+            album_thumbnail_two.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_two.innerHTML = random_album2.name
             album_release_two.innerHTML = random_album2.release_year
             album_thumbnail_two.src = random_album2.thumbnail
             artist_name_two.innerHTML = random_album2.artist_name
             album_second_streams.innerHTML = "???"
+            song_2.src = random_album2.preview_url
+            lower_btn.disabled = false
         }
     })
 
     higher_btn.addEventListener("click", async () => {
         if (random_album.popularity == random_album2.popularity) {
+            higher_btn.disabled = true
             score++
             score_counter.innerHTML = score
             random_album = random_album2
+            album_thumbnail_one.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_one.innerHTML = random_album.name
             album_release_one.innerHTML = random_album.release_year
             album_thumbnail_one.src = random_album.thumbnail
             artist_name_one.innerHTML = random_album.artist_name
             album_first_streams.innerHTML = random_album.popularity
+            song_preview_btn_one.classList.remove("hidden")
+            song_1.src = random_album.preview_url
             random_album2 = await getRandomAlbum()
+            album_thumbnail_two.src = "https://i.imgur.com/jsRzKRk.png"
             album_name_two.innerHTML = random_album2.name
             album_release_two.innerHTML = random_album2.release_year
             album_thumbnail_two.src = random_album2.thumbnail
             artist_name_two.innerHTML = random_album2.artist_name
+            song_2.src = random_album2.preview_url
+            song_preview_btn_two.classList.remove("hidden")
             album_second_streams.innerHTML = "???"
+            higher_btn.disabled = false
         }
     })
 })
@@ -208,3 +249,33 @@ close_modal.addEventListener("click", () => {
     }
 })
 
+song_preview_btn_one.addEventListener("click", () => {
+    if (document.querySelector(".play-btn-1").classList.contains("fa-play")) {
+        document.querySelector(".play-btn-1").classList.remove("fa-play")
+        document.querySelector(".play-btn-1").classList.add("fa-pause")
+        song_1.play()
+        song_1.volume = 0.6
+    }
+    else {
+        document.querySelector(".play-btn-1").classList.remove("fa-pause")
+        document.querySelector(".play-btn-1").classList.add("fa-play")
+        song_1.pause()
+        song_1.volume = 0.6
+    }
+})
+
+song_preview_btn_two.addEventListener("click", () => {
+    if (document.querySelector(".play-btn-2").classList.contains("fa-play")) {
+        document.querySelector(".play-btn-2").classList.remove("fa-play")
+        document.querySelector(".play-btn-2").classList.add("fa-pause")
+        song_2.play()
+        //Reducing the volume of the song
+        song_2.volume = 0.6
+    }
+    else {
+        document.querySelector(".play-btn-2").classList.remove("fa-pause")
+        document.querySelector(".play-btn-2").classList.add("fa-play")
+        song_2.pause()
+        song_2.volume = 0.6
+    }
+})
