@@ -12,7 +12,7 @@ let album_second_streams = document.querySelector("#artist-streams-next")
 let song_1 = document.querySelector("#song-1")
 let song_2 = document.querySelector("#song-2")
 
-let spotify_token = "BQCKSgdE7NZvAks4Fzb-Duwt9DtROF27IAeNtb5sXhmVtgxT7a_yMflJ-R0VG3U_EJAPrT4XT3c2g3Xx9SPwvngdePoQUz8b3sZtWsNMEbt-y-Epswb11b6SmDB3ODGYQuCdrAZSKz0TlTPR6ORR3CAsmESWJJiq65AEHg11USpvdfzMoTI9apqNd6Qkxr8SP89LPpA"
+let spotify_token = "BQAJEhmWmsEFYeQZdpvqtkW0A6Rv6nojwjnix_WNJ2ghUpnMXH9sgsNfRDAOtQIwc8e_QK5xhLxlxIsVEGCE-WTlX4yiSHmqo-V-j0Ap_2zB-kSRSIkQJ_r5HqjlCc6YzoVfJSfDFXkIuKHemfY-zQukmTGvMhveY5Bffvt8ISwD7knQ2j_dIy0qN34Fj1jbS6QGsWs"
 //Headover to Spotify Console and get yourself an access token
 
 playlists = ["https://open.spotify.com/playlist/37i9dQZEVXbMDoHDwVN2tF?si=faaa2d272ee3496e","https://open.spotify.com/playlist/37i9dQZF1DX7iB3RCnBnN4?si=a19e44f9f7c34acb"]
