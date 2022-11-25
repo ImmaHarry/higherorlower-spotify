@@ -1,5 +1,4 @@
 # Higher or Lower w/ your favorite Spotify Albums!
-<h2>Visit https://spotify.harrydadev.me to test it!</h2>
 Higher or Lower but with the albums from the trending artists!!
 <br>
 
